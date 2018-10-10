@@ -95,6 +95,12 @@
           "enum": ["DefaultFormatter", "GutterFormatter"],
           "default": "DefaultFormatter"
         },
+        "jest.coverageUpdateStrategy": {
+          "description": "Strategy to use updating coverage maps",
+          "type": "string",
+          "enum": ["Replace", "Merge"],
+          "default": "Replace"
+        },
         "jest.enableCodeLens": {
           "description": "Whether codelens for debugging should show",
           "type": "boolean",

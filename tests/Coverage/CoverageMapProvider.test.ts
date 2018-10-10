@@ -1,6 +1,6 @@
 jest.unmock('../../src/Coverage/CoverageMapProvider')
 
-import { CoverageMapProvider } from '../../src/Coverage/CoverageMapProvider'
+import { CoverageMapProvider, CoverageUpdateStrategy } from '../../src/Coverage/CoverageMapProvider'
 import { createCoverageMap } from 'istanbul-lib-coverage'
 import { createSourceMapStore } from 'istanbul-lib-source-maps'
 
@@ -12,6 +12,19 @@ describe('CoverageMapProvider', () => {
       const sut = new CoverageMapProvider()
 
       expect(sut.map).toBe(expected)
+    })
+
+    it('should set the default updateStrategy', () => {
+      const sut = new CoverageMapProvider()
+
+      expect(sut.updateStrategy).toBe(CoverageMapProvider.defaultUpdateStrategy)
+    })
+
+    it('should set the updateStrategy if provided', () => {
+      const strategy = CoverageUpdateStrategy.Merge
+      const sut = new CoverageMapProvider(strategy)
+
+      expect(sut.updateStrategy).toBe(strategy)
     })
   })
 
@@ -50,17 +63,33 @@ describe('CoverageMapProvider', () => {
       expect(transformCoverage).toBeCalledWith(expected)
     })
 
-    it('should store the transformed coverage map', () => {
+    it('should store the transformed coverage map if updateStrategy is Replace', () => {
       const expected: any = {}
 
       createSourceMapStore.mockReturnValueOnce({
         transformCoverage: () => ({ map: expected }),
       })
 
-      const sut = new CoverageMapProvider()
+      const sut = new CoverageMapProvider(CoverageUpdateStrategy.Replace)
       sut.update(expected)
 
       expect(sut.map).toBe(expected)
+    })
+
+    it('should merge the transformed coverage map if updateStrategy is Merge', () => {
+      const merge = jest.fn().mockImplementation(map => map)
+      const expected: any = { merge }
+      ;(createCoverageMap as jest.Mock<any>).mockReturnValueOnce(expected)
+      createSourceMapStore.mockReturnValueOnce({
+        transformCoverage: map => ({ map }),
+      })
+      const updatedMap: any = {}
+
+      const sut = new CoverageMapProvider(CoverageUpdateStrategy.Merge)
+      sut.update(updatedMap)
+
+      expect(sut.map).toBe(expected)
+      expect(merge).toBeCalledWith(updatedMap)
     })
   })
 

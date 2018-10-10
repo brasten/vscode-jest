@@ -127,6 +127,7 @@ describe('Extension', () => {
       expect(getExtensionSettings()).toEqual({
         autoEnable: true,
         coverageFormatter: 'DefaultFormatter',
+        coverageUpdateStrategy: 'Replace',
         debugCodeLens: {
           enabled: true,
           showWhenTestStateIn: [TestState.Fail, TestState.Unknown],

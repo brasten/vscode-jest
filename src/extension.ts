@@ -8,7 +8,7 @@ import { JestExt } from './JestExt'
 import { IPluginSettings } from './Settings'
 import { registerStatusBar } from './statusBar'
 import { registerSnapshotCodeLens, registerSnapshotPreview } from './SnapshotCodeLens'
-import { registerCoverageCodeLens } from './Coverage'
+import { registerCoverageCodeLens, CoverageUpdateStrategy } from './Coverage'
 import { TestState } from './DebugCodeLens'
 
 let extensionInstance: JestExt
@@ -103,6 +103,7 @@ export function getExtensionSettings(): IPluginSettings {
     runAllTestsFirst: config.get<boolean>('runAllTestsFirst'),
     showCoverageOnLoad: config.get<boolean>('showCoverageOnLoad'),
     coverageFormatter: config.get<string>('coverageFormatter'),
+    coverageUpdateStrategy: config.get<CoverageUpdateStrategy>('coverageUpdateStrategy'),
     debugMode: config.get<boolean>('debugMode'),
   }
 }

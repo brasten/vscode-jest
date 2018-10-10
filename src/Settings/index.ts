@@ -1,4 +1,5 @@
 import { TestState } from '../DebugCodeLens'
+import { CoverageUpdateStrategy } from '../Coverage/CoverageMapProvider'
 
 export interface IPluginSettings {
   autoEnable?: boolean
@@ -16,6 +17,7 @@ export interface IPluginSettings {
   runAllTestsFirst?: boolean
   showCoverageOnLoad: boolean
   coverageFormatter: string
+  coverageUpdateStrategy: CoverageUpdateStrategy
   debugMode?: boolean
 }
 

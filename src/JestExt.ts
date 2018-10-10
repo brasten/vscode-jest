@@ -68,7 +68,7 @@ export class JestExt {
     this.clearOnNextInput = true
     this.pluginSettings = pluginSettings
 
-    this.coverageMapProvider = new CoverageMapProvider()
+    this.coverageMapProvider = new CoverageMapProvider(pluginSettings.coverageUpdateStrategy)
     this.coverageOverlay = new CoverageOverlay(
       context,
       this.coverageMapProvider,

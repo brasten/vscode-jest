@@ -4,6 +4,10 @@ exports[`Coverage module.exports should match the snapshot 1`] = `
 Object {
   "CoverageMapProvider": [Function],
   "CoverageOverlay": [Function],
+  "CoverageUpdateStrategy": Object {
+    "Merge": "Merge",
+    "Replace": "Replace",
+  },
   "registerCoverageCodeLens": [Function],
 }
 `;
